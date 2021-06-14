@@ -1,0 +1,14 @@
+kind: "Workflow"
+version: "1"
+
+name: "dev-workflow"
+
+trigger:
+  triggerType: "GitPushTrigger"
+  triggerEventFieldName: "branch"
+  triggerEventFieldComparisonOperator: "equals"
+  triggerEventFieldComparisonValue: "some-dev-branch"
+
+modelPipeline:
+  type: ReferenceModelPipeline
+  ref : "pipeline.yaml"

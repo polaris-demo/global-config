@@ -1,0 +1,25 @@
+kind: "Workflow"
+version: "1"
+
+name: "feature-branch-workflow"
+
+trigger:
+  triggerType: "GitPushTrigger"
+  triggerEventFieldName: "branch"
+  triggerEventFieldComparisonOperator: "regex"
+  triggerEventFieldComparisonValue: "^(?!master).*$"
+
+modelPipeline:
+  type: ReferenceModelPipeline
+  ref : "pipeline.yaml"
+
+deployPipeline:
+  stages:
+    - name: "feature-branch-staging-deploy"
+      friendly_name: "Feature Branch Staging Deploy"
+      target:
+        type: "http-api"
+        env: "staging-us-east-1"
+        strategy: "replace"
+        name: "branch-feature-reg" # should be templatizable to include the branch
+        friendlyName: "Basic Regression API (feature-regularization)"
