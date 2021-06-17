@@ -1,0 +1,26 @@
+kind: "Workflow"
+version: "1"
+
+name: "batch-workflow"
+
+trigger:
+  triggerType: "GitPushTrigger"
+  triggerEventFieldName: "branch"
+  triggerEventFieldComparisonOperator: "equals"
+  triggerEventFieldComparisonValue: "batch"
+
+modelPipeline:
+  type: ReferenceModelPipeline
+  ref : "batch_pipeline.yaml"
+
+deployPipeline:
+  stages:
+    - name: "batch-deploy"
+      friendly_name: "Cron Batch Deploy"
+      target:
+        type: "batch"
+        env: "staging-us-east-1"
+        strategy: "replace"
+        name: "batch-deploy"
+        friendlyName: "Cron Batch Deploy"
+        cron_schedule: "* * * * *"
