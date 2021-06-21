@@ -7,7 +7,7 @@ trigger:
   triggerType: "GitPushTrigger"
   triggerEventFieldName: "branch"
   triggerEventFieldComparisonOperator: "regex"
-  triggerEventFieldComparisonValue: "^(?!master).*$"
+  triggerEventFieldComparisonValue: "^(?!master|batch).*$"
 
 modelPipeline:
   type: ReferenceModelPipeline
