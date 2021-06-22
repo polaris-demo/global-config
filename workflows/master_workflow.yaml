@@ -18,6 +18,17 @@ deployPipeline:
     - name: "prod-deploy"
       friendly_name: "Deploy to Prod"
       target:
+        deploy_time_env_vars:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: deploy-aws-creds
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: deploy-aws-creds
+              key: AWS_SECRET_ACCESS_KEY
         type: "http-api"
         env: "prod-us-east-1"
         strategy: "replace"
